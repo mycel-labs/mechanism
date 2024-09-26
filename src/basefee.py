@@ -2,7 +2,7 @@
 from networkresource import P2PNetwork
 
 def calculate_new_base_fee(old_base_fee, current_load, target_load):
-    # EthereumのBaseFee計算式: OldBaseFee * (1 + 1/8 * (usedUsage - targetUsage))
+    # BaseFee計算式: OldBaseFee * (1 + 1/8 * (usedUsage - targetUsage))
     load_factor = (current_load - target_load) / target_load
     adjustment = 1 + (1 / 8 * load_factor)
 
