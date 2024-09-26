@@ -1,13 +1,14 @@
 # Base fee
 Calculate the base fee to be burned based on the difference between the target resource usage (NetworkUsage) and the actual resource usage.
 
+```
 NewBaseFee = 
     OldBaseFee * 
     (1 + a * (usedUsage - targetUsage))
 
 a == 1/8
 InitialOldBaseFee == 1
-
+```
 
 # Reward
 Calculate node-specific rewards based on the BaseReward, adjusted according to the work performed.
