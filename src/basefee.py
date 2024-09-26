@@ -6,3 +6,4 @@ def calculate_new_base_fee(old_base_fee, current_usage, target_usage, a):
     # Base Feeの計算
     new_base_fee = old_base_fee * adjustment
     return new_base_fee
+

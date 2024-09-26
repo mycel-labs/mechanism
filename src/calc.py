@@ -2,18 +2,18 @@ from networkresource import P2PNetwork
 from reward import RewardCalculator
 from basefee import calculate_new_base_fee  # basefee.pyからインポート
 
-def main():
+# シミュレーションロジックを関数化
+def run_simulation():
     # ネットワークの使用率を取得する
     network = P2PNetwork(10)  # 10ノードのP2Pネットワークを作成
     current_network_usage = network.get_network_usage()
-    print(f"Network Usage: {current_network_usage:.2f}%")
 
     # 報酬計算のための変数を設定する
     old_base_reward = 100  # 前回のベース報酬
     network_usage_current = current_network_usage / 100  # 使用率を百分率から比率に変換
     target_usage = 0.5  # ターゲットネットワーク使用率 (報酬とベースフィーで共通)
     
-    # reward adjestment
+    # reward adjustment
     b = 1 / 8  # 調整係数
 
     # Base Feeのための変数を設定
@@ -47,16 +47,14 @@ def main():
 
     # 報酬を計算して表示
     reward = calculator.calculate_reward(old_base_reward)
-    print(f"Calculated reward: {reward}")
 
     # ベースフィーの計算と表示
     new_base_fee = calculate_new_base_fee(old_base_fee, current_network_usage, target_usage, a)
-    print(f"New base fee: {new_base_fee:.2f}")
 
     # Generated Amountの計算
     generated_amount = reward - new_base_fee
-    print(f"Generated amount: {generated_amount:.2f}")
+    
+    # 結果として network_usage_current も返す
+    return reward, new_base_fee, generated_amount, network_usage_current
 
-# このスクリプトが直接実行された場合のみ、main()を実行する
-if __name__ == "__main__":
-    main()
+
