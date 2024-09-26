@@ -15,14 +15,12 @@ Calculate node-specific rewards based on the BaseReward, adjusted according to t
 
 ```
 Reward = 
-    BaseReward * 
-    { 0.5 * TxofCreateNode / TxofCreateNetwork} *
-    { 0.3 * TxofTransferNode / TxofTransferNetwork} *
-    { 0.15 * TxofStoreNode / TxofStoreNetwork} *
-    { 0.05 * VerifyTxNode / VerifyTxNetwork}
+    BaseReward(p) * 
+    { 0.5 * TxofCreateNode(p) / TxofCreateNetwork(p)} *
+    { 0.3 * TxofTransferNode(p) / TxofTransferNetwork(p)} *
+    { 0.15 * TxofStoreNode(p) / TxofStoreNetwork(p)} *
+    { 0.05 * VerifyTxNode(p) / VerifyTxNetwork(p)}
 ```
-
-
 
 ## Base reward
 ```
@@ -37,7 +35,7 @@ b == 1/8
 
 - BaseReward(p): Base Reward for the current period p
 - BaseReward(p-1): Base Reward from the previous period
-- a: Adjustment coefficient (1/8)
+- b: Adjustment coefficient (1/8)
 - NetworkUsage(p): Network usage rate for the current period p
 - TargetNetworkUsage: Target network usage rate (50%)
 

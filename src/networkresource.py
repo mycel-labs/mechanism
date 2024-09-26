@@ -3,24 +3,24 @@ import random
 class P2PNode:
     def __init__(self, node_id):
         self.node_id = node_id
-        self.local_load = 0
-        self.neighbor_loads = {}
-        self.global_load_estimate = 0
+        self.node_usage = 0
+        self.neighbor_usages = {}
+        self.network_usage_estimate = 0
 
-    def update_local_load(self):
+    def update_node_usage(self):
         # Simulate resource usage (e.g., CPU, memory, network)
-        self.local_load = random.uniform(0, 100)
+        self.node_usage = random.uniform(0, 100)
 
-    def share_load_info(self, network):
+    def share_usage_info(self, network):
         for neighbor in network.get_neighbors(self.node_id):
-            neighbor.receive_load_info(self.node_id, self.local_load)
+            neighbor.receive_usage_info(self.node_id, self.node_usage)
 
-    def receive_load_info(self, node_id, load):
-        self.neighbor_loads[node_id] = load
+    def receive_usage_info(self, node_id, usage):
+        self.neighbor_usages[node_id] = usage
 
-    def estimate_global_load(self):
-        all_loads = list(self.neighbor_loads.values()) + [self.local_load]
-        self.global_load_estimate = sum(all_loads) / len(all_loads)
+    def estimate_network_usage(self):
+        all_usages = list(self.neighbor_usages.values()) + [self.node_usage]
+        self.network_usage_estimate = sum(all_usages) / len(all_usages)
 
 
 class P2PNetwork:
@@ -32,19 +32,17 @@ class P2PNetwork:
 
     def simulate_network_activity(self):
         for node in self.nodes:
-            node.update_local_load()
-            node.share_load_info(self)
+            node.update_node_usage()
+            node.share_usage_info(self)
         for node in self.nodes:
-            node.estimate_global_load()
+            node.estimate_network_usage()
 
-    def get_average_global_load_estimate(self):
-        return sum(node.global_load_estimate for node in self.nodes) / len(self.nodes)
+    def get_average_network_usage_estimate(self):
+        return sum(node.network_usage_estimate for node in self.nodes) / len(self.nodes)
 
-    def get_global_load(self):
+    def get_network_usage(self):
         self.simulate_network_activity()
-        return self.get_average_global_load_estimate()
+        return self.get_average_network_usage_estimate()
 
 # Example usage:
-network = P2PNetwork(10)  # 10 nodes
-current_global_load = network.get_global_load()
-print(f"Resource usage: {current_global_load:.2f}%")
+network = P2PNetwork(10)  
