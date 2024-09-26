@@ -1,52 +1,52 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-from calc import run_simulation  # calc.pyのrun_simulationをインポート
+from calc import run_simulation  # Importing run_simulation from calc.py
 
-# 複数回のシミュレーションを実行する関数
+# Function to run multiple simulations
 def run_multiple_simulations(num_simulations, initial_supply):
     results = []
-    total_supply = initial_supply  # 初期のtotal supply
+    total_supply = initial_supply  # Initial total supply
     
     for i in range(num_simulations):
         reward, new_base_fee, generated_amount, network_usage = run_simulation()
         
-        # total_supplyにgenerated_amountを加算していく
+        # Add generated_amount to total_supply
         total_supply += generated_amount
         
-        # シミュレーション結果を保存
+        # Save the simulation results
         results.append({
             "Simulation": i + 1,
             "Reward": reward,
             "Base Fee": new_base_fee,
             "Generated Amount": generated_amount,
-            "Network Usage": network_usage * 100,  # ここで * 100 を行う
-            "Total Supply": total_supply  # total_supplyを記録
+            "Network Usage": network_usage * 100,  # Multiply by 100 here
+            "Total Supply": total_supply  # Record total_supply
         })
     
     return pd.DataFrame(results)
 
-# ビジュアライズする関数
+# Function to visualize the simulation results
 def visualize_simulation_results(df):
     fig, ax = plt.subplots(4, 1, figsize=(10, 16))
 
-    # Rewardのプロット
+    # Plot for Reward
     ax[0].plot(df["Simulation"], df["Reward"], marker='o', label='Reward')
     ax[0].set_title('Reward over Simulations')
     ax[0].set_xlabel('Simulation')
     ax[0].set_ylabel('Reward')
     ax[0].legend()
 
-    # Base Feeのプロット
+    # Plot for Base Fee
     ax[1].plot(df["Simulation"], df["Base Fee"], marker='o', color='orange', label='Base Fee')
     ax[1].set_title('Base Fee over Simulations')
     ax[1].set_xlabel('Simulation')
     ax[1].set_ylabel('Base Fee')
     ax[1].legend()
 
-    # Generated AmountとNetwork Usageを重ねて表示
-    ax2 = ax[2].twinx()  # 2つ目のY軸を作成
+    # Display Generated Amount and Network Usage together
+    ax2 = ax[2].twinx()  # Create a second Y-axis
 
-    # Generated Amountのプロット (左Y軸)
+    # Plot for Generated Amount (left Y-axis)
     ax[2].plot(df["Simulation"], df["Generated Amount"], marker='o', color='green', label='Generated Amount')
     ax[2].set_title('Generated Amount and Network Usage over Simulations')
     ax[2].set_xlabel('Simulation')
@@ -54,39 +54,39 @@ def visualize_simulation_results(df):
     ax[2].tick_params(axis='y', labelcolor='green')
     ax[2].legend(loc='upper left')
 
-    # Network Usageのプロット (右Y軸)
+    # Plot for Network Usage (right Y-axis)
     ax2.plot(df["Simulation"], df["Network Usage"], marker='o', color='blue', label='Network Usage')
     ax2.set_ylabel('Network Usage (%)', color='blue')
     ax2.tick_params(axis='y', labelcolor='blue')
     ax2.legend(loc='upper right')
 
-    # Total Supplyのプロット
+    # Plot for Total Supply
     ax[3].plot(df["Simulation"], df["Total Supply"], marker='o', color='purple', label='Total Supply')
     ax[3].set_title('Total Supply over Simulations')
     ax[3].set_xlabel('Simulation')
     ax[3].set_ylabel('Total Supply')
     ax[3].legend()
 
-    # グラフを表示
+    # Display the graphs
     plt.tight_layout()
     plt.show()
 
-# メイン処理
+# Main process
 if __name__ == "__main__":
-    initial_supply = 100_000_000  # 初期供給量
-    num_simulations = 100  # シミュレーション回数
+    initial_supply = 100_000_000  # Initial supply amount
+    num_simulations = 100  # Number of simulations
     
-    # シミュレーション実行
+    # Run the simulations
     df_results = run_multiple_simulations(num_simulations, initial_supply)
 
-    # 結果を表示
+    # Display the results
     print(df_results)
 
-    # 結果をCSVファイルにエクスポート
+    # Export the results to a CSV file
     csv_file_name = 'simulation_results.csv'
-    df_results.to_csv(csv_file_name, index=False)  # index=Falseで行番号をCSVに含めない
+    df_results.to_csv(csv_file_name, index=False)  # index=False to exclude row numbers from the CSV
     
-    print(f"結果を {csv_file_name} に保存しました。")
+    print(f"Results saved to {csv_file_name}.")
 
-    # 結果をビジュアライズ
+    # Visualize the results
     visualize_simulation_results(df_results)
