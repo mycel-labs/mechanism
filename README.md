@@ -43,12 +43,17 @@ b == 1/8
 ## Period
 2 week
 
+## Work type
+TxofCreate: The act of creating a Transferable Account
+TxofTransfer: Changing the owner of a Transferable Account
+TxofStore: Storing data held by other nodes
+VerifyTx: Verifying whether the Proof sent to the MPC account protocol matches the node’s transaction
+
 ## Work weight
 TxofCreate: 50%
 TxofTransfer: 30%
 TxofStore: 15%
 VerifyTx: 5%
-
 
 
 
