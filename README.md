@@ -1,3 +1,6 @@
+# Abstract
+Mycel Network is an decentralized network consisting of node operators. This source describes the mint and burn mechanism of the network. Mycel Network's incentive mechanism consists of network usage-based Proof of Work (PoW) and a network usage-based base fee (burn mechanism). This mechanism takes good care of computer resource providers, who are the node operators.
+
 # Base fee
 Calculate the base fee to be burned based on the difference between the target resource usage (NetworkUsage) and the actual resource usage.
 
